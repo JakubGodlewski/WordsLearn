@@ -229,5 +229,6 @@ public class EditWordPanel extends JPanel implements AfterInsertPanel{
     {
         int idUserWord = Integer.parseInt(tfId.getText());
         Word word = new Word();
+
     }
 }
