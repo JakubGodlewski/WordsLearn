@@ -124,7 +124,7 @@ public class MainPanel extends JPanel{
         else
         {
             JOptionPane.showMessageDialog(null, "Select words from table");
-            //komentarz
+            //komentarz2
         }
 
     }
