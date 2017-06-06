@@ -19,7 +19,9 @@ public interface DatabaseInterface {
     void insertLanguage(Language language);
     Language getLanguageByName(String name);
     void insertWord(Word word, User user);
+    void insertNewWord(Word word);
     Word getWordByWord(Word word);
     void deleteUserWord(UserWordCategoryLanguage uwcl);
-    void updateWord(Word word, int userWordId);
+    void updateWord(Word word, int userWordId, User user);
+    UserWordCategoryLanguage selectUserWordCategoryLanguageById(int id);
 }

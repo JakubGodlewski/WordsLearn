@@ -1,12 +1,10 @@
 package com.godlewski.gui;
 
-import com.godlewski.dao.DatabaseInterface;
 import com.godlewski.dao.DatabaseInterfaceImpl;
 import com.godlewski.domain.Category;
 import com.godlewski.domain.Language;
 import com.godlewski.domain.User;
 import com.godlewski.domain.Word;
-import com.godlewski.domain.models.CustomTableModel;
 import com.godlewski.gui.interfaces.AfterInsertPanel;
 
 import javax.swing.*;
@@ -166,7 +164,7 @@ public class AddNewWordPanel extends JPanel implements AfterInsertPanel{
             DatabaseInterfaceImpl.getInstance().insertWord(word, user);
             JOptionPane.showMessageDialog(null, "Word added to database");
             clear();
-            mainPanel.afterInsert();
+            mainPanel.updateTable();
         }
     }
 

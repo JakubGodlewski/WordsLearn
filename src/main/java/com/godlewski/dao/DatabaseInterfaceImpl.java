@@ -277,19 +277,7 @@ public class DatabaseInterfaceImpl implements DatabaseInterface {
         Word word2 = getWordByWord(word);
         if(word2 == null)
         {
-            String query ="insert into word (wordName, translation, idLanguage, idCategory)" +
-                    " values (?,?,?,?);";
-            try {
-                PreparedStatement ps = connection.prepareStatement(query);
-                ps.setString(1, word.getWordName());
-                ps.setString(2, word.getTranslation());
-                ps.setInt(3, word.getIdLanguage());
-                ps.setInt(4, word.getIdCategory());
-                ps.execute();
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            insertNewWord(word);
             word2 = getWordByWord(word);
         }
 
@@ -302,6 +290,23 @@ public class DatabaseInterfaceImpl implements DatabaseInterface {
             ps.setInt(2, word2.getId());
             ps.setInt(3,0);
             ps.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void insertNewWord(Word word) {
+        String query ="insert into word (wordName, translation, idLanguage, idCategory)" +
+                " values (?,?,?,?);";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setString(1, word.getWordName());
+            ps.setString(2, word.getTranslation());
+            ps.setInt(3, word.getIdLanguage());
+            ps.setInt(4, word.getIdCategory());
+            ps.execute();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -344,7 +349,103 @@ public class DatabaseInterfaceImpl implements DatabaseInterface {
     }
 
     @Override
-    public void updateWord(Word word, int userWordId) {
+    public void updateWord(Word word, int userWordId, User user) {
 
+        String query = "update UserWord set idWord = ? where id=?";
+        String query2 = "select count(*) from userword where idWord=?";
+        String query3 = "select idWord from userword where id=?";
+        String query4 = "update Word set wordName=?, translation=?, idCategory=?, idLanguage=? where id=?";
+
+        Word w = DatabaseInterfaceImpl.getInstance().getWordByWord(word);
+        if(w==null)
+        {
+            try {
+                PreparedStatement ps = connection.prepareStatement(query3);
+                ps.setInt(1, userWordId);
+                ResultSet rs = ps.executeQuery();
+                while(rs.next())
+                {
+                    int idWord = rs.getInt(1);
+                    ps = connection.prepareStatement(query2);
+                    ps.setInt(1, idWord);
+                    System.out.println(idWord);
+                    rs = ps.executeQuery();
+                    while(rs.next())
+                    {
+                        if(rs.getInt(1)>1)
+                        {
+                            insertNewWord(word);
+                            w = DatabaseInterfaceImpl.getInstance().getWordByWord(word);
+                            ps = connection.prepareStatement(query);
+                            ps.setInt(1, w.getId());
+                            ps.setInt(2, userWordId);
+                            ps.execute();
+                        }
+                        else
+                        {
+                            ps = connection.prepareStatement(query4);
+                            ps.setString(1, word.getWordName());
+                            ps.setString(2, word.getTranslation());
+                            ps.setInt(3, word.getIdCategory());
+                            ps.setInt(4, word.getIdLanguage());
+                            ps.setInt(5, idWord);
+                            ps.execute();
+                        }
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        else
+        {
+            try
+            {
+                PreparedStatement ps = connection.prepareStatement(query);
+                ps.setInt(1, w.getId());
+                ps.setInt(2, userWordId);
+                ps.execute();
+
+            }catch(SQLException e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    @Override
+    public UserWordCategoryLanguage selectUserWordCategoryLanguageById(int id) {
+        UserWordCategoryLanguage uwcl = null;
+
+        String query = "select * from UserWord uw " +
+                "inner join Word w on w.id = uw.idWord " +
+                "inner join Category c on c.id = w.idCategory " +
+                "inner join Language l on l.id = w.idLanguage " +
+                "where uw.id = ?;";
+        try {
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            while(rs.next())
+            {
+                uwcl = new UserWordCategoryLanguage(
+                        rs.getInt(1),
+                        rs.getInt(3),
+                        rs.getInt(2),
+                        rs.getInt(4),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getInt(8),
+                        rs.getInt(9),
+                        rs.getString(13),
+                        rs.getString(11));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return uwcl;
     }
 }

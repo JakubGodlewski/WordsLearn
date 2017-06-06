@@ -38,12 +38,17 @@ public class EditWordPanel extends JPanel implements AfterInsertPanel{
     private java.util.List<Category> categories = DatabaseInterfaceImpl.getInstance().selectCategory();
     private java.util.List<Language> languages = DatabaseInterfaceImpl.getInstance().selectLanguage();
 
+    private User user;
+    private MainPanel mainPanel;
+
     private int index;
 
-    public EditWordPanel(java.util.List<UserWordCategoryLanguage>uwclList)
+    public EditWordPanel(java.util.List<UserWordCategoryLanguage>uwclList, User user, MainPanel mainPanel)
     {
         super(new GridBagLayout());
         this.uwclList = uwclList;
+        this.user = user;
+        this.mainPanel = mainPanel;
         index = 0;
 
         JPanel panelNavigation = new JPanel(new GridBagLayout());
@@ -153,6 +158,11 @@ public class EditWordPanel extends JPanel implements AfterInsertPanel{
         gbcPosition.gridx = 0;
         gbcPosition.gridy = 0;
         panelButtons.add(btnEdit, gbcPosition);
+        btnEdit.addActionListener(e ->
+        {
+            edit();
+            mainPanel.updateTable();
+        });
 
         gbcPosition.gridx = 1;
         gbcPosition.gridy = 0;
@@ -228,7 +238,24 @@ public class EditWordPanel extends JPanel implements AfterInsertPanel{
     private void edit()
     {
         int idUserWord = Integer.parseInt(tfId.getText());
-        Word word = new Word();
+        Word word = new Word(0, tfName.getText(), tfTranslation.getText(), 0,0);
+        categories.forEach(e ->{
+            if(e.getCategoryName().equals(cbCategory.getSelectedItem()))
+                word.setIdCategory(e.getId());
+        });
+        languages.forEach(e ->{
+            if(e.getLanguageName().equals(cbLanguage.getSelectedItem()))
+                word.setIdLanguage(e.getId());
+        });
 
+        DatabaseInterfaceImpl.getInstance().updateWord(word, idUserWord, user);
+        UserWordCategoryLanguage uwcl = DatabaseInterfaceImpl.getInstance().selectUserWordCategoryLanguageById(idUserWord);
+        uwclList.get(index).setTranslation(uwcl.getTranslation());
+        uwclList.get(index).setWordName(uwcl.getWordName());
+        uwclList.get(index).setCategoryName(uwcl.getCategoryName());
+        uwclList.get(index).setLanguageName(uwcl.getLanguageName());
+        uwclList.get(index).setIdCategory(uwcl.getIdCategory());
+        uwclList.get(index).setIdLanguage(uwcl.getIdLanguage());
+        fillFields(uwclList.get(index));
     }
 }

@@ -77,7 +77,7 @@ public class MainPanel extends JPanel{
         add(panelMain);
     }
 
-    public void afterInsert()
+    public void updateTable()
     {
         customTableModel.update(DatabaseInterfaceImpl.getInstance().selectUserWordCategoryLanguageByUserId(user.getId()));
         table.updateUI();
@@ -113,7 +113,7 @@ public class MainPanel extends JPanel{
         {
             JFrame frame = new JFrame("Edit words");
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            EditWordPanel panel = new EditWordPanel(uwclList);
+            EditWordPanel panel = new EditWordPanel(uwclList, user, this);
             panel.setVisible(true);
 
             frame.setContentPane(panel);
