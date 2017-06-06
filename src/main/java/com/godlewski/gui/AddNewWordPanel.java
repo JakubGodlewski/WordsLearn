@@ -16,7 +16,7 @@ import java.util.*;
 /**
  * Created by jakub on 26.05.2017.
  */
-public class AfterInserPanel extends JPanel implements AfterInsertPanel{
+public class AddNewWordPanel extends JPanel implements AfterInsertPanel{
 
     private JButton btnAdd = new JButton("Add");
     private JButton btnClear = new JButton("Clear");
@@ -41,7 +41,7 @@ public class AfterInserPanel extends JPanel implements AfterInsertPanel{
     private User user;
     private MainPanel mainPanel;
 
-    public AfterInserPanel(User user, MainPanel mainPanel) {
+    public AddNewWordPanel(User user, MainPanel mainPanel) {
         super(new GridBagLayout());
         this.user = user;
         this.mainPanel = mainPanel;

@@ -44,7 +44,7 @@ public class MainPanel extends JPanel{
         btnAddWord.addActionListener(e ->{
             JFrame frame = new JFrame("Add new word");
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            AfterInserPanel panel = new AfterInserPanel(user, this);
+            AddNewWordPanel panel = new AddNewWordPanel(user, this);
             panel.setVisible(true);
 
             frame.setContentPane(panel);
