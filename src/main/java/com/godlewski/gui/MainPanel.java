@@ -85,16 +85,25 @@ public class MainPanel extends JPanel{
 
     private void delete()
     {
-        UserWordCategoryLanguage uwcl;
-        int rowIndex;
-        for(int i=0; i<table.getSelectedRows().length; i++)
+        if(table.getSelectedRows().length==0)
         {
-            rowIndex = table.getSelectedRows()[i];
-            uwcl = customTableModel.getSelectedValue(rowIndex);
-            DatabaseInterfaceImpl.getInstance().deleteUserWord(uwcl);
+            JOptionPane.showMessageDialog(null, "Select word to delete");
         }
-        customTableModel.update(DatabaseInterfaceImpl.getInstance().selectUserWordCategoryLanguageByUserId(user.getId()));
-        table.updateUI();
+        else
+        {
+            UserWordCategoryLanguage uwcl;
+            int rowIndex;
+            for(int i=0; i<table.getSelectedRows().length; i++)
+            {
+                rowIndex = table.getSelectedRows()[i];
+                uwcl = customTableModel.getSelectedValue(rowIndex);
+                DatabaseInterfaceImpl.getInstance().deleteUserWord(uwcl);
+            }
+            customTableModel.update(DatabaseInterfaceImpl.getInstance().selectUserWordCategoryLanguageByUserId(user.getId()));
+            table.updateUI();
+            JOptionPane.showMessageDialog(null, "Word deleted");
+        }
+
     }
 
     private void edit()
@@ -124,9 +133,72 @@ public class MainPanel extends JPanel{
         else
         {
             JOptionPane.showMessageDialog(null, "Select words from table");
-            //komentarz2
         }
 
+    }
+
+    public JMenuBar createMenuBar()
+    {
+        JMenuBar menuBar = new JMenuBar();
+
+        JMenu menuLearn = new JMenu("Learn");
+        JMenu menuHelp = new JMenu("Help");
+
+        JMenuItem menuItemLearningMode = new JMenuItem("Learning Mode");
+        JMenuItem menuItemRepeatsMode = new JMenuItem("Repeats Mode");
+        JMenuItem menuItemHurryUpMode = new JMenuItem("Hurry Up Mode");
+
+        JMenuItem menuItemAbout = new JMenuItem("About");
+        menuItemAbout.addActionListener(e ->
+        {
+            JFrame frame = new JFrame("About");
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            AboutPanel panel = new AboutPanel();
+            panel.setVisible(true);
+
+            frame.setContentPane(panel);
+            frame.setVisible(true);
+            frame.setResizable(false);
+            frame.pack();
+        });
+
+        JMenuItem menuItemLogOut = new JMenuItem("Log out");
+        menuItemLogOut.addActionListener(e ->logOut());
+
+        JMenuItem menuItemExit = new JMenuItem("Exit");
+        menuItemExit.addActionListener(e ->{
+            JFrame frame = (JFrame)this.getRootPane().getParent();
+            frame.dispose();
+        });
+
+        menuLearn.add(menuItemLearningMode);
+        menuLearn.add(menuItemRepeatsMode);
+        menuLearn.add(menuItemHurryUpMode);
+
+        menuHelp.add(menuItemAbout);
+        menuHelp.add(menuItemLogOut);
+        menuHelp.add(menuItemExit);
+
+        menuBar.add(menuLearn);
+        menuBar.add(menuHelp);
+
+        return menuBar;
+    }
+
+    private void logOut()
+    {
+        JFrame frame = new JFrame("Login");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        LoginPanel panel = new LoginPanel();
+        panel.setVisible(true);
+
+        frame.setContentPane(panel);
+        frame.setVisible(true);
+        frame.setResizable(false);
+        frame.pack();
+
+        JFrame thisFrame = (JFrame)this.getRootPane().getParent();
+        thisFrame.dispose();
     }
 
 }

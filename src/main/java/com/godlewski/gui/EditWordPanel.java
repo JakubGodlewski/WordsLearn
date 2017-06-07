@@ -161,12 +161,14 @@ public class EditWordPanel extends JPanel implements AfterInsertPanel{
         btnEdit.addActionListener(e ->
         {
             edit();
+            JOptionPane.showMessageDialog(null, "Word edited");
             mainPanel.updateTable();
         });
 
         gbcPosition.gridx = 1;
         gbcPosition.gridy = 0;
         panelButtons.add(btnClear, gbcPosition);
+        btnClear.addActionListener(e ->fillFields(uwclList.get(index)));
 
         gbcPosition.gridx = 2;
         gbcPosition.gridy = 0;

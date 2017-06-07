@@ -101,6 +101,7 @@ public class LoginPanel extends JPanel {
         frame.setContentPane(panel);
         frame.setVisible(true);
         frame.setResizable(false);
+        frame.setJMenuBar(panel.createMenuBar());
         frame.pack();
 
         JFrame thisFrame = (JFrame)this.getRootPane().getParent();
