@@ -22,21 +22,22 @@ public class MainPanel extends JPanel{
     private LearningmodePanel learningmodePanel;
     private RepeatsmodePanel repeatsmodePanel;
     User user;
+    private MainPanel mainPanel;
 
     public MainPanel(User user)
     {
         super(new CardLayout());
+        this.mainPanel = this;
         this.user = user;
         tablePanel = new TablePanel(user);
-        hurryupmodePanel = new HurryupmodePanel();
-        learningmodePanel = new LearningmodePanel();
-        repeatsmodePanel = new RepeatsmodePanel();
+        hurryupmodePanel = new HurryupmodePanel(mainPanel);
+        learningmodePanel = new LearningmodePanel(mainPanel);
+        repeatsmodePanel = new RepeatsmodePanel(mainPanel);
 
         add(tablePanel, "TABLE");
         add(hurryupmodePanel, "HURRY UP");
         add(learningmodePanel, "LEARNING");
         add(repeatsmodePanel, "REPEATS");
-
     }
 
     public JMenuBar createMenuBar()
@@ -76,7 +77,7 @@ public class MainPanel extends JPanel{
         menuLearn.add(menuItemLearningMode);
         menuItemLearningMode.addActionListener(x ->{
             CardLayout cl = (CardLayout)this.getLayout();
-            cl.show(this, "LEARING");
+            cl.show(this, "LEARNING");
         });
         menuLearn.add(menuItemRepeatsMode);
         menuItemRepeatsMode.addActionListener(x ->{
