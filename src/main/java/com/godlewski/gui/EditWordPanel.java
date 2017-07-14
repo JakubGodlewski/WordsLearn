@@ -39,16 +39,16 @@ public class EditWordPanel extends JPanel implements AfterInsertPanel{
     private java.util.List<Language> languages = DatabaseInterfaceImpl.getInstance().selectLanguage();
 
     private User user;
-    private MainPanel mainPanel;
+    private TablePanel tablePanel;
 
     private int index;
 
-    public EditWordPanel(java.util.List<UserWordCategoryLanguage>uwclList, User user, MainPanel mainPanel)
+    public EditWordPanel(java.util.List<UserWordCategoryLanguage>uwclList, User user, TablePanel tablePanel)
     {
         super(new GridBagLayout());
         this.uwclList = uwclList;
         this.user = user;
-        this.mainPanel = mainPanel;
+        this.tablePanel = tablePanel;
         index = 0;
 
         JPanel panelNavigation = new JPanel(new GridBagLayout());
@@ -162,7 +162,7 @@ public class EditWordPanel extends JPanel implements AfterInsertPanel{
         {
             edit();
             JOptionPane.showMessageDialog(null, "Word edited");
-            mainPanel.updateTable();
+            tablePanel.updateTable();
         });
 
         gbcPosition.gridx = 1;

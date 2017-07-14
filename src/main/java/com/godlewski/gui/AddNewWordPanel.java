@@ -37,12 +37,12 @@ public class AddNewWordPanel extends JPanel implements AfterInsertPanel{
     private Map<Language, String> languagesNames = new HashMap<>();
 
     private User user;
-    private MainPanel mainPanel;
+    private TablePanel tablePanel;
 
-    public AddNewWordPanel(User user, MainPanel mainPanel) {
+    public AddNewWordPanel(User user, TablePanel tablePanel) {
         super(new GridBagLayout());
         this.user = user;
-        this.mainPanel = mainPanel;
+        this.tablePanel = tablePanel;
 
         JPanel panelFields1 = new JPanel(new GridBagLayout());
         GridBagConstraints gbcPosition = new GridBagConstraints();
@@ -164,7 +164,7 @@ public class AddNewWordPanel extends JPanel implements AfterInsertPanel{
             DatabaseInterfaceImpl.getInstance().insertWord(word, user);
             JOptionPane.showMessageDialog(null, "Word added to database");
             clear();
-            mainPanel.updateTable();
+            tablePanel.updateTable();
         }
     }
 
