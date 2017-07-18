@@ -415,7 +415,7 @@ public class DatabaseInterfaceImpl implements DatabaseInterface {
     }
 
     @Override
-    public UserWordCategoryLanguage selectUserWordCategoryLanguageById(int id) {
+    public UserWordCategoryLanguage getUserWordCategoryLanguageById(int id) {
         UserWordCategoryLanguage uwcl = null;
 
         String query = "select * from UserWord uw " +
@@ -447,5 +447,21 @@ public class DatabaseInterfaceImpl implements DatabaseInterface {
             e.printStackTrace();
         }
         return uwcl;
+    }
+
+    @Override
+    public void updateUserWord(UserWord userWord) {
+        try {
+            String query = "update UserWord set idWord =?, idUser=?, points=? where id=?";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, userWord.getIdWord());
+            ps.setInt(2, userWord.getIdUser());
+            ps.setInt(3, userWord.getPoints());
+            ps.setInt(4, userWord.getId());
+            ps.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 }

@@ -1,7 +1,8 @@
-package com.godlewski.gui;
+package com.godlewski.gui.login;
 
 import com.godlewski.dao.DatabaseInterfaceImpl;
 import com.godlewski.domain.User;
+import com.godlewski.gui.MainPanel;
 
 import javax.swing.*;
 import java.awt.*;

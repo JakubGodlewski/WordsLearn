@@ -1,4 +1,4 @@
-package com.godlewski.gui;
+package com.godlewski.gui.help;
 
 import javax.swing.*;
 import java.awt.*;

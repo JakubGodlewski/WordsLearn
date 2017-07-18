@@ -2,7 +2,7 @@ package com.godlewski;
 
 import com.godlewski.dao.DatabaseInterface;
 import com.godlewski.dao.DatabaseInterfaceImpl;
-import com.godlewski.gui.LoginPanel;
+import com.godlewski.gui.login.LoginPanel;
 
 import javax.swing.*;
 

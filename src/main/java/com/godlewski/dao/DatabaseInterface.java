@@ -23,5 +23,6 @@ public interface DatabaseInterface {
     Word getWordByWord(Word word);
     void deleteUserWord(UserWordCategoryLanguage uwcl);
     void updateWord(Word word, int userWordId, User user);
-    UserWordCategoryLanguage selectUserWordCategoryLanguageById(int id);
+    UserWordCategoryLanguage getUserWordCategoryLanguageById(int id);
+    void updateUserWord(UserWord userWord);
 }

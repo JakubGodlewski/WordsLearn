@@ -1,11 +1,14 @@
-package com.godlewski.gui;
+package com.godlewski.gui.crud;
 
 import com.godlewski.dao.DatabaseInterfaceImpl;
 import com.godlewski.domain.Category;
 import com.godlewski.domain.Language;
 import com.godlewski.domain.User;
 import com.godlewski.domain.Word;
+import com.godlewski.gui.MainPanel;
+import com.godlewski.gui.table.TablePanel;
 import com.godlewski.gui.interfaces.AfterInsertPanel;
+import com.sun.javaws.Main;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,12 +40,12 @@ public class AddNewWordPanel extends JPanel implements AfterInsertPanel{
     private Map<Language, String> languagesNames = new HashMap<>();
 
     private User user;
-    private TablePanel tablePanel;
+    private MainPanel mainPanel;
 
-    public AddNewWordPanel(User user, TablePanel tablePanel) {
+    public AddNewWordPanel(User user, MainPanel mainPanel) {
         super(new GridBagLayout());
         this.user = user;
-        this.tablePanel = tablePanel;
+        this.mainPanel = mainPanel;
 
         JPanel panelFields1 = new JPanel(new GridBagLayout());
         GridBagConstraints gbcPosition = new GridBagConstraints();
@@ -164,7 +167,7 @@ public class AddNewWordPanel extends JPanel implements AfterInsertPanel{
             DatabaseInterfaceImpl.getInstance().insertWord(word, user);
             JOptionPane.showMessageDialog(null, "Word added to database");
             clear();
-            tablePanel.updateTable();
+            mainPanel.updateTable();
         }
     }
 

@@ -1,8 +1,6 @@
 package com.godlewski.domain.models;
 
-import com.godlewski.domain.UserWord;
 import com.godlewski.domain.UserWordCategoryLanguage;
-import com.godlewski.domain.Word;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
@@ -56,7 +54,7 @@ public class CustomTableModel extends AbstractTableModel{
         this.rows = rows;
         columnNames = new ArrayList<>();
         Collections.addAll(columnNames,
-                "ID WORD", "WORD NAME", "TRANSLATION", "POINTS", "LANGUAGE", "CATEGORY");
+                "ID", "WORD NAME", "TRANSLATION", "POINTS", "LANGUAGE", "CATEGORY");
     }
 
     public void update(List<UserWordCategoryLanguage> rows) {

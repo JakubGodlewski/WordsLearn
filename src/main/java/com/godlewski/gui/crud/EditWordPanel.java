@@ -1,7 +1,8 @@
-package com.godlewski.gui;
+package com.godlewski.gui.crud;
 
 import com.godlewski.dao.DatabaseInterfaceImpl;
 import com.godlewski.domain.*;
+import com.godlewski.gui.table.TablePanel;
 import com.godlewski.gui.interfaces.AfterInsertPanel;
 
 import javax.swing.*;
@@ -251,7 +252,7 @@ public class EditWordPanel extends JPanel implements AfterInsertPanel{
         });
 
         DatabaseInterfaceImpl.getInstance().updateWord(word, idUserWord, user);
-        UserWordCategoryLanguage uwcl = DatabaseInterfaceImpl.getInstance().selectUserWordCategoryLanguageById(idUserWord);
+        UserWordCategoryLanguage uwcl = DatabaseInterfaceImpl.getInstance().getUserWordCategoryLanguageById(idUserWord);
         uwclList.get(index).setTranslation(uwcl.getTranslation());
         uwclList.get(index).setWordName(uwcl.getWordName());
         uwclList.get(index).setCategoryName(uwcl.getCategoryName());

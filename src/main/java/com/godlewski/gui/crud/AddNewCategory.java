@@ -1,4 +1,4 @@
-package com.godlewski.gui;
+package com.godlewski.gui.crud;
 
 import com.godlewski.dao.DatabaseInterfaceImpl;
 import com.godlewski.domain.Category;

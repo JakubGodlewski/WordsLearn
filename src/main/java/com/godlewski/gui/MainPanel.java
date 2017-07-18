@@ -3,14 +3,16 @@ package com.godlewski.gui;
 import com.godlewski.dao.DatabaseInterfaceImpl;
 import com.godlewski.domain.User;
 import com.godlewski.domain.UserWordCategoryLanguage;
-import com.godlewski.domain.models.CustomTableModel;
+import com.godlewski.gui.help.AboutPanel;
 import com.godlewski.gui.learning.HurryupmodePanel;
 import com.godlewski.gui.learning.LearningmodePanel;
 import com.godlewski.gui.learning.RepeatsmodePanel;
+import com.godlewski.gui.login.LoginPanel;
+import com.godlewski.gui.table.TablePanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * Created by jakub on 21.05.2017.
@@ -21,15 +23,17 @@ public class MainPanel extends JPanel{
     private HurryupmodePanel hurryupmodePanel;
     private LearningmodePanel learningmodePanel;
     private RepeatsmodePanel repeatsmodePanel;
-    User user;
+    private User user;
     private MainPanel mainPanel;
+    private java.util.List<UserWordCategoryLanguage> userWordCategoryLanguage;
 
     public MainPanel(User user)
     {
         super(new CardLayout());
         this.mainPanel = this;
         this.user = user;
-        tablePanel = new TablePanel(user);
+        this.userWordCategoryLanguage = createUserWordCategoryLanguage();
+        tablePanel = new TablePanel(user, mainPanel);
         hurryupmodePanel = new HurryupmodePanel(mainPanel);
         learningmodePanel = new LearningmodePanel(mainPanel);
         repeatsmodePanel = new RepeatsmodePanel(mainPanel);
@@ -77,6 +81,7 @@ public class MainPanel extends JPanel{
         menuLearn.add(menuItemLearningMode);
         menuItemLearningMode.addActionListener(x ->{
             CardLayout cl = (CardLayout)this.getLayout();
+            this.learningmodePanel.initial();
             cl.show(this, "LEARNING");
         });
         menuLearn.add(menuItemRepeatsMode);
@@ -114,6 +119,16 @@ public class MainPanel extends JPanel{
 
         JFrame thisFrame = (JFrame)this.getRootPane().getParent();
         thisFrame.dispose();
+    }
+
+    public void updateTable()
+    {
+        this.tablePanel.updateTable();
+    }
+
+    public java.util.List<UserWordCategoryLanguage> createUserWordCategoryLanguage()
+    {
+        return DatabaseInterfaceImpl.getInstance().selectUserWordCategoryLanguageByUserId(user.getId());
     }
 
 }
